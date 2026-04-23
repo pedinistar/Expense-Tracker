@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      `
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./src/styles/style.css" />
+    <script src="./src/scripts/script.js"></script>
+    <title>Expense Tracker</title>
+  </head>
+  <body
+    onload="renderEntries()"
+    class="bg-[var(--background)] lg:px-100 md:px-20 py-10 px-4"
+  >
+    <header>
+      <small class="num text-xs text-[var(--muted)] tracking-wider">2026</small>
+      <h1 class="text-3xl font-medium mt-1 tracking-tight">Expense Tracker</h1>
+      <p class="text-sm text-[var(--muted)] mt-1">
+        Track spending, stay in control.
+      </p>
+    </header>
+
+    <section class="mt-8">
+      <div
+        class="bg-[var(--dark)] text-white p-5 rounded-2xl relative overflow-hidden"
+      >
+        <small class="small-head">TOTAL BALANCE</small>
+        <h2 class="text-4xl tracking-tighter mt-2">
+          &#8377;<span id="balanceAmt" class="num font-semibold"></span>
+        </h2>
+        <div
+          class="line mt-2 mb-2 border-t-2 border-[var(--muted)] opacity-30"
+        ></div>
+        <small class="text-xs text-[var(--muted)] opacity-60"
+          >Updated as you go. All amounts in INR.</small
+        >
+        <div
+          class="circle w-45 h-45 bg-[var(--muted)] opacity-[8%] rounded-full absolute top-[-50px] right-[-30px]"
+        ></div>
+      </div>
+
+      <div class="mt-4 flex gap-3">
+        <div
+          class="w-[50%] bg-white px-4 py-4 rounded-2xl border border-[var(--muted)]/40"
+        >
+          <small class="small-head">INCOME</small>
+          <h3 class="mt-[1px] text-lg text-green-600 tracking-tighter mt-2">
+            <span class="bi bi-arrow-up text-sm font-bold"></span>
+            &#8377;<span id="incomeAmt" class="num font-semibold"></span>
+          </h3>
+        </div>
+        <div
+          class="w-[50%] bg-white px-4 py-4 rounded-2xl border border-[var(--muted)]/40"
+        >
+          <small class="small-head">EXPENSES</small>
+          <h3 class="mt-[1px] text-lg text-red-600 tracking-tighter mt-2">
+            <span class="bi bi-arrow-down text-sm font-bold"></span>
+            &#8377;<span id="expensesAmt" class="num font-semibold"></span>
+          </h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6">
+      <div
+        class="bg-white px-5 py-4 rounded-2xl border border-[var(--muted)]/40"
+      >
+        <small class="small-head">NEW ENTRY</small>
+
+        <div class="mt-1">
+          <input
+            type="text"
+            placeholder="What did you spend on?"
+            name=""
+            id="entryName"
+            class="w-full mt-3 border border-[var(--muted)]/40 rounded-lg px-4 py-3 text-sm text-[var(--dark)]/50"
+          />
+          <div class="flex gap-3 items-center justify-between mt-3">
+            <input
+              type="number"
+              placeholder="Amount (&#8377;)"
+              name=""
+              id="entryAmt"
+              class="w-full border border-[var(--muted)]/40 rounded-lg px-4 py-3 text-sm text-[var(--dark)]/50"
+            />
+            <select
+              name=""
+              id="entryType"
+              class="cursor-pointer border border-[var(--muted)]/40 rounded-lg px-4 py-[11px] text-sm"
+            >
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+          <select
+            name=""
+            id="entryCategory"
+            class="cursor-pointer w-full mt-3 border border-[var(--muted)]/40 rounded-lg px-4 py-[11px] text-sm"
+          >
+            <option value="select" disabled>Select Category...</option>
+            <option value="living">🍔 Living</option>
+            <option value="bills">🧾 Bills</option>
+            <option value="lifestyle">🛍️ Lifestyle</option>
+            <option value="transport">🚗 Transport</option>
+            <option value="health">💊 Health</option>
+            <option value="other">📦 Other</option>
+          </select>
+        </div>
+
+        <button
+          class="bg-[var(--dark)] text-[var(--background)] w-full mt-3 rounded-xl px-3 py-3 text-sm font-medium cursor-pointer"
+          onclick="addEntry()"
+        >
+          <span class="bi bi-plus"></span> Add Entry
+        </button>
+      </div>
+    </section>
+
+    <section class="mt-6">
+      <div class="flex items-center justify-between">
+        <small class="small-head">HISTORY</small>
+        <p class="num text-[var(--muted)] text-xs">
+          <span id="numOfEntries"></span> entries
+        </p>
+      </div>
+
+      <div id="entries" class="mt-4 h-120 overflow-y-auto"></div>
+    </section>
+  </body>
+</html>
