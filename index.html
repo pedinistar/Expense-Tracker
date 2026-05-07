@@ -128,6 +128,28 @@
           <span id="numOfEntries"></span> entries
         </p>
       </div>
+      <div class="flex items-center justify-end mt-2 gap-2">
+        <p class="text-sm font-semibold">Filters:</p>
+        <select
+          id="typeFilter"
+          name="typeFilter"
+          class="text-xs px-2 py-1 bg-white border border-[var(--muted)]/40 rounded-lg"
+          onchange="renderEntries()"
+        >
+          <option value="all">Select Type</option>
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+        <select
+          id="categoryFilter"
+          name="categryFilter"
+          class="text-xs px-2 py-1 bg-white border border-[var(--muted)]/40 rounded-lg"
+        >
+          <option value="">Select Category</option>
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+      </div>
 
       <div id="entries" class="mt-4 h-120 overflow-y-auto"></div>
     </section>

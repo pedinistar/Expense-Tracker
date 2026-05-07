@@ -13,6 +13,17 @@ function renderEntries() {
   let entries = document.querySelector("#entries");
   entries.innerHTML = "";
 
+  // Type Filter Logic
+  const typeFilter = document.querySelector("#typeFilter");
+
+  if (typeFilter.value === "expense") {
+    transactions = transactions.filter(
+      (trans) => trans.entryType === "expense",
+    );
+  } else {
+    transactions = transactions.filter((trans) => trans.entryType === "income");
+  }
+
   document.querySelector("#numOfEntries").innerHTML = transactions.length;
 
   if (transactions.length === 0) {
@@ -55,7 +66,7 @@ function renderEntries() {
 
             <div>
               <button onclick="deleteEntry(${index})"
-                class="deleteBtn bi bi-x-lg text-[var(--muted)] border border-[var(--muted)]/40 rounded-lg px-2 py-1 rounded-lg"
+                class="deleteBtn bi bi-x-lg text-[var(--muted)] border border-[var(--muted)]/40 rounded-lg px-2 py-1 rounded-lg cursor-pointer"
               ></button>
             </div>
           </div>
