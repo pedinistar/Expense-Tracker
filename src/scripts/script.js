@@ -10,19 +10,64 @@ function saveData(transactions) {
 function renderEntries() {
   let transactions = getData();
 
-  let entries = document.querySelector("#entries");
-  entries.innerHTML = "";
-
   // Type Filter Logic
   const typeFilter = document.querySelector("#typeFilter");
 
-  if (typeFilter.value === "expense") {
-    transactions = transactions.filter(
-      (trans) => trans.entryType === "expense",
-    );
-  } else {
-    transactions = transactions.filter((trans) => trans.entryType === "income");
+  switch (typeFilter.value) {
+    case "expense":
+      transactions = transactions.filter(
+        (trans) => trans.entryType === "expense",
+      );
+      break;
+    case "income":
+      transactions = transactions.filter(
+        (trans) => trans.entryType === "income",
+      );
+    default:
+      break;
   }
+
+  // Category Filter Logic
+  const categoryFilter = document.querySelector("#categoryFilter");
+
+  switch (categoryFilter.value) {
+    case "living":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "living",
+      );
+      break;
+    case "bills":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "bills",
+      );
+      break;
+    case "lifestyle":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "lifestyle",
+      );
+      break;
+    case "transport":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "transport",
+      );
+      break;
+    case "health":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "health",
+      );
+      break;
+    case "other":
+      transactions = transactions.filter(
+        (trans) => trans.entryCategory === "other",
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  let entries = document.querySelector("#entries");
+  entries.innerHTML = "";
 
   document.querySelector("#numOfEntries").innerHTML = transactions.length;
 
@@ -65,7 +110,7 @@ function renderEntries() {
             <div class="amt font-semibold num ${entry.entryType === "expense" ? "text-red-500" : "text-green-500"}"> ${entry.entryType === "expense" ? "-" : "+"}&#8377;${entry.entryAmt}</div>
 
             <div>
-              <button onclick="deleteEntry(${index})"
+              <button onclick="deleteEntry(${entry.id})"
                 class="deleteBtn bi bi-x-lg text-[var(--muted)] border border-[var(--muted)]/40 rounded-lg px-2 py-1 rounded-lg cursor-pointer"
               ></button>
             </div>
@@ -91,12 +136,13 @@ function addEntry() {
   let entryType = document.querySelector("#entryType");
   let entryCategory = document.querySelector("#entryCategory");
 
-  if (entryName.value === "" || entryAmt.value === 0) {
+  if (entryName.value === "" || parseInt(entryAmt.value) <= 0) {
     alert("Please enter the required data to proced.");
     return;
   }
 
   transactions.push({
+    id: Date.now(),
     entryName: entryName.value,
     entryAmt: parseInt(entryAmt.value),
     entryType: entryType.value,
@@ -121,9 +167,9 @@ function addEntry() {
   calculateBalance();
 }
 
-function deleteEntry(idx) {
+function deleteEntry(id) {
   let transactions = getData();
-  transactions.splice(idx, 1);
+  transactions = transactions.filter((trans) => trans.id != id);
 
   saveData(transactions);
   renderEntries();
